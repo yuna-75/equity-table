@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会员权益对比表</title>
+    <link rel="icon" type="image/png" href="img/笨嘴神器logo.png">
+    <style>
+        .table-container {
+            width: 360px;
+            margin: 40px auto;
+            background: #fff;
+            overflow: hidden;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        thead tr {
+            height: 42px;
+            background: #ffffff;
+        }
+        thead th {
+            font-size: 12px;
+            color: #8c8c8c;
+            border-bottom: 1px solid #EBEDF0;
+            font-weight: 500;
+            padding: 0 6px;
+            vertical-align: middle;
+            letter-spacing: -1px;
+            border-top: 1px solid #EBEDF0;
+            border-left: 1px solid #EBEDF0;
+            border-right: 1px solid #EBEDF0;
+        }
+        th.col-benefit {
+            width: 70%;
+            text-align: left;
+            border-right: 1px solid #EBEDF0;
+        }
+        th.col-partner {
+            width: 10%;
+            text-align: center;
+            border-right: 1px solid #EBEDF0;
+            white-space: nowrap;
+            padding-left: 2px;
+            padding-right: 2px;
+        }
+        th.col-blackgold-year {
+            width: 10%;
+            text-align: center;
+            border-right: 1px solid #EBEDF0;
+        }
+        th.col-blackgold-quarter {
+            width: 10%;
+            text-align: center;
+        }
+        .first-row {
+            background: #F7F8FA;
+        }
+        .first-row td {
+            border-bottom: 1px solid #EBEDF0;
+            height: 42px;
+            text-align: center;
+            vertical-align: middle;
+            border-right: 1px solid #EBEDF0;
+        }
+        .first-row td:last-child {
+            border-right: none;
+        }
+        .first-row td:first-child {
+            text-align: left;
+            color: #262626;
+            font-weight: 400;
+            padding-left: 6px;
+            padding-right: 6px;
+            border-left: 1px solid #EBEDF0;
+        }
+        td img {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .category-row td {
+            background: #F4E8FB;
+            color: #901DD7;
+            font-weight: 400;
+            border-right: 1px solid rgba(144, 29, 215, 0.1);
+        }
+        .category-row td:first-child {
+            border-left: 1px solid rgba(144, 29, 215, 0.1);
+            color: #901DD7 !important;
+            font-weight: 400 !important;
+        }
+        tr.category-row > td:first-child {
+            color: #901DD7 !important;
+            font-weight: 400 !important;
+        }
+        .category-row td:last-child {
+            border-right: 1px solid rgba(144, 29, 215, 0.1);
+        }
+        .category-row td:not(:first-child) {
+            font-size: 12px;
+        }
+        .remark-tag {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 0 4px;
+            background: linear-gradient(90deg, #EE0A24 0%, #F76969 100%);
+            color: #fff;
+            font-size: 10px;
+            border-radius: 2px;
+            line-height: 16px;
+            vertical-align: middle;
+        }
+        .img-label-wrap {
+            position: relative;
+            height: 42px;
+            width: 100%;
+        }
+        .img-label-wrap img {
+            position: absolute;
+            top: 54%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: block;
+        }
+        .limited-tag {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: inline-block;
+            padding: 0 4px;
+            background: linear-gradient(90deg, #EE0A24 0%, #F76969 100%);
+            color: #fff;
+            font-size: 8px;
+            border-radius: 2px;
+            line-height: 14px;
+            height: 14px;
+            box-sizing: border-box;
+            white-space: nowrap;
+        }
+        .watermark-bg {
+            position: absolute;
+            left: 0; top: 0; width: 100%; height: 100%;
+            z-index: 10;
+            pointer-events: none;
+            user-select: none;
+            background-image: url('img/watermark.png');
+            background-size: 240px auto;
+            background-position: center 0px;
+            background-repeat: repeat-y;
+            background-origin: content-box;
+            background-clip: content-box;
+            opacity: 0.05;
+            /* 间距360px建议水印图片本身高度为360px，或在图片底部加透明像素 */
+        }
+        .refresh-btn {
+            position: fixed;
+            top: 24px;
+            right: 32px;
+            z-index: 100000;
+            background: #901DD7;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(144,29,215,0.08);
+            opacity: 0.92;
+            transition: background 0.2s;
+        }
+        .refresh-btn:hover {
+            background: #a94be0;
+        }
+        .screenshot-btn {
+            position: fixed;
+            top: 24px;
+            right: 140px;
+            z-index: 100000;
+            background: #901DD7;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(144,29,215,0.08);
+            opacity: 0.92;
+            transition: background 0.2s;
+            margin-right: 8px;
+        }
+        .screenshot-btn:hover {
+            background: #a94be0;
+        }
+        .capture-area {
+            position: relative;
+            width: fit-content;
+            margin: 40px auto;
+        }
+        .table-container {
+            position: relative;
+            z-index: 1;
+        }
+        table, th, td {
+            border-radius: 0 !important;
+        }
+        thead th:first-child {
+            border-top-left-radius: 0 !important;
+        }
+        thead th:last-child {
+            border-top-right-radius: 0 !important;
+        }
+        tbody tr:last-child td:first-child {
+            border-bottom-left-radius: 0 !important;
+        }
+        tbody tr:last-child td:last-child {
+            border-bottom-right-radius: 0 !important;
+        }
+        .hide-btn {
+            position: fixed;
+            top: 24px;
+            right: 248px;
+            z-index: 100000;
+            background: #901DD7;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(144,29,215,0.08);
+            opacity: 0.92;
+            transition: background 0.2s;
+            margin-right: 8px;
+        }
+        .hide-btn:hover {
+            background: #a94be0;
+        }
+    </style>
+</head>
+<body>
+    <div id="capture-area" class="capture-area">
+        <div class="watermark-bg"></div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-benefit">等级特权</th>
+                        <th class="col-partner">合伙人</th>
+                        <th class="col-blackgold-year">黑金(年度)</th>
+                        <th class="col-blackgold-quarter">黑金(季度)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- JS 动态插入 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button id="refresh-feishu-btn" class="refresh-btn">刷新数据</button>
+    <button id="screenshot-btn" class="screenshot-btn">截图</button>
+    <button id="hide-btn" class="hide-btn">隐藏</button>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script>
+    async function loadFirstRow() {
+        const res = await fetch('/api/feishu-table-first-row');
+        const record = await res.json();
+        let items = [];
+        if (record.items) {
+            items = record.items;
+        } else if (record.data && record.data.items) {
+            items = record.data.items;
+        } else if (Array.isArray(record)) {
+            items = record;
+        }
+
+        // 1. 收集未分类和分类下所有明细行，统计行单独渲染
+        const uncategorizedArr = items.filter(item => item.fields && (item.fields['分类'] === '未分类' || !item.fields['分类']));
+        const groupByCategory = {};
+        items.forEach(item => {
+            const fields = item.fields || {};
+            const category = fields['分类'] || '未分类';
+            if (!groupByCategory[category]) groupByCategory[category] = [];
+            groupByCategory[category].push(fields);
+        });
+        // 渲染
+        let html = '';
+        let detailIdx = 0;
+        // 未分类明细
+        uncategorizedArr.forEach(fieldsObj => {
+            const fields = fieldsObj.fields;
+            const bg = detailIdx % 2 === 0 ? '#F7F8FA' : '#F2F3F5';
+            const remark = fields['备注'] ? `<span class="remark-tag">${fields['备注']}</span>` : '';
+            // 黑金年度
+            let yearContent = '';
+            if (fields['is_limited_time']) {
+                yearContent = `<div class="img-label-wrap"><span class="limited-tag">${fields['is_limited_time']}</span><img src="img/黑金年度.png" width="16" height="16"></div>`;
+            } else if (fields['黑金(年度)'] == 1 || fields['黑金(年度)'] == '1') {
+                yearContent = '<img src="img/黑金年度.png" width="16" height="16">';
+            } else {
+                yearContent = '';
+            }
+            // 黑金季度
+            let quarterContent = '';
+            if (fields['is_limited_time']) {
+                quarterContent = `<div class="img-label-wrap"><span class="limited-tag">${fields['is_limited_time']}</span><img src="img/黑金季度.png" width="16" height="16"></div>`;
+            } else if (fields['黑金(季度)'] == 1 || fields['黑金(季度)'] == '1') {
+                quarterContent = '<img src="img/黑金季度.png" width="16" height="16">';
+            } else {
+                quarterContent = '';
+            }
+            html += `<tr class="first-row" style="background:${bg}">
+                <td>${fields['等级特权'] || ''}${remark}</td>
+                <td>${fields['合伙人'] == 1 || fields['合伙人'] == '1' ? '<img src="img/合伙人.png" width="16" height="16">' : ''}</td>
+                <td>${yearContent}</td>
+                <td>${quarterContent}</td>
+            </tr>`;
+            detailIdx++;
+        });
+        // 分类统计+明细
+        Object.entries(groupByCategory)
+            .filter(([category]) => category !== '未分类')
+            .forEach(([category, arr]) => {
+                const countPartner = arr.filter(f => f['合伙人'] == 1 || f['合伙人'] == '1').length;
+                const countYear = arr.filter(f => f['黑金(年度)'] == 1 || f['黑金(年度)'] == '1').length;
+                const countQuarter = arr.filter(f => f['黑金(季度)'] == 1 || f['黑金(季度)'] == '1').length;
+                // 分类统计行
+                html += `<tr class="first-row category-row">
+                    <td>${category}</td>
+                    <td>${countPartner}项</td>
+                    <td>${countYear}项</td>
+                    <td>${countQuarter}项</td>
+                </tr>`;
+                // 分类下明细行，继续全局交替
+                arr.forEach(fields => {
+                    const bg = detailIdx % 2 === 0 ? '#F7F8FA' : '#F2F3F5';
+                    const remark = fields['备注'] ? `<span class="remark-tag">${fields['备注']}</span>` : '';
+                    // 黑金年度
+                    let yearContent = '';
+                    if (fields['is_limited_time']) {
+                        yearContent = `<div class="img-label-wrap"><span class="limited-tag">${fields['is_limited_time']}</span><img src="img/黑金年度.png" width="16" height="16"></div>`;
+                    } else if (fields['黑金(年度)'] == 1 || fields['黑金(年度)'] == '1') {
+                        yearContent = '<img src="img/黑金年度.png" width="16" height="16">';
+                    } else {
+                        yearContent = '';
+                    }
+                    // 黑金季度
+                    let quarterContent = '';
+                    if (fields['is_limited_time']) {
+                        quarterContent = `<div class="img-label-wrap"><span class="limited-tag">${fields['is_limited_time']}</span><img src="img/黑金季度.png" width="16" height="16"></div>`;
+                    } else if (fields['黑金(季度)'] == 1 || fields['黑金(季度)'] == '1') {
+                        quarterContent = '<img src="img/黑金季度.png" width="16" height="16">';
+                    } else {
+                        quarterContent = '';
+                    }
+                    html += `<tr class="first-row" style="background:${bg}">
+                        <td>${fields['等级特权'] || ''}${remark}</td>
+                        <td>${fields['合伙人'] == 1 || fields['合伙人'] == '1' ? '<img src="img/合伙人.png" width="16" height="16">' : ''}</td>
+                        <td>${yearContent}</td>
+                        <td>${quarterContent}</td>
+                    </tr>`;
+                    detailIdx++;
+                });
+            });
+        document.querySelector('tbody').innerHTML = html;
+    }
+    window.onload = loadFirstRow;
+
+    document.getElementById('refresh-feishu-btn').onclick = async function() {
+        this.disabled = true;
+        this.innerText = '刷新中...';
+        try {
+            await fetch('/api/refresh-feishu');
+            await loadFirstRow();
+            this.innerText = '刷新成功';
+            setTimeout(() => {
+                this.innerText = '刷新数据';
+                this.disabled = false;
+            }, 1200);
+        } catch (e) {
+            this.innerText = '刷新失败';
+            setTimeout(() => {
+                this.innerText = '刷新数据';
+                this.disabled = false;
+            }, 1200);
+        }
+    };
+
+    document.getElementById('screenshot-btn').onclick = async function() {
+        const btn = this;
+        const refreshBtn = document.getElementById('refresh-feishu-btn');
+        btn.disabled = true;
+        btn.innerText = '截图中...';
+        // 隐藏按钮
+        btn.style.visibility = 'hidden';
+        refreshBtn.style.visibility = 'hidden';
+
+        const el = document.getElementById('capture-area');
+        html2canvas(el, {useCORS: true, backgroundColor: null, scale: 2}).then(canvas => {
+            // 压缩图片到1MB以内
+            let quality = 0.92;
+            let dataUrl = canvas.toDataURL('image/jpeg', quality);
+            while (dataUrl.length / 1024 > 1024 && quality > 0.4) {
+                quality -= 0.08;
+                dataUrl = canvas.toDataURL('image/jpeg', quality);
+            }
+            const link = document.createElement('a');
+            link.download = 'table-screenshot.jpg';
+            link.href = dataUrl;
+            link.click();
+            btn.innerText = '截图';
+            btn.disabled = false;
+            btn.style.visibility = '';
+            refreshBtn.style.visibility = '';
+        }).catch(() => {
+            btn.innerText = '截图失败';
+            btn.disabled = false;
+            btn.style.visibility = '';
+            refreshBtn.style.visibility = '';
+            setTimeout(() => {
+                btn.innerText = '截图';
+            }, 1200);
+        });
+    };
+
+    document.getElementById('hide-btn').onclick = function() {
+        document.getElementById('screenshot-btn').style.display = 'none';
+        document.getElementById('refresh-feishu-btn').style.display = 'none';
+        this.style.display = 'none';
+    };
+    </script>
+</body>
+</html> 
